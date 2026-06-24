@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2020年 アルカディアピアノコンクール</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=Noto+Sans+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #F5F2EB; color: #1A1A1A; min-height: 100vh; }
+
+    .piano-strip { height: 32px; background: #1A1A1A; display: flex; align-items: flex-start; overflow: hidden; }
+    .pk-w { background: #E8E4DA; border-right: 1px solid #888; height: 32px; flex: 1; min-width: 0; }
+    .pk-b { background: #111; height: 20px; flex: 0.6; min-width: 0; border-left: 1px solid #444; border-right: 1px solid #444; }
+
+    .header { background: #0F0F0F; padding: 50px 24px 46px; text-align: center; }
+    .header-en { font-family: 'Noto Sans JP', sans-serif; font-size: 10px; letter-spacing: 7px; color: #C4962A; font-weight: 300; margin-bottom: 16px; text-transform: uppercase; }
+    .header h1 { font-family: 'Noto Serif JP', serif; font-size: clamp(22px, 5vw, 34px); font-weight: 700; color: #F0EDE5; letter-spacing: 4px; line-height: 1.5; margin-bottom: 22px; }
+    .ornament { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 16px; }
+    .ornament-line { width: 56px; height: 1px; background: linear-gradient(to right, transparent, #C4962A); }
+    .ornament-line.r { background: linear-gradient(to left, transparent, #C4962A); }
+    .ornament-symbol { color: #C4962A; font-size: 15px; }
+    .header-sub { font-size: 11px; color: rgba(240,237,229,0.4); letter-spacing: 5px; font-weight: 300; }
+
+    .nav { background: #1A1A1A; display: flex; justify-content: center; border-bottom: 1px solid #2E2E2E; }
+    .nav-btn { font-family: 'Noto Sans JP', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 3px; color: rgba(240,237,229,0.4); background: none; border: none; border-bottom: 2px solid transparent; padding: 16px 28px; cursor: pointer; transition: color 0.2s, border-color 0.2s; }
+    .nav-btn:hover { color: rgba(240,237,229,0.7); }
+    .nav-btn.active { color: #C4962A; border-bottom-color: #C4962A; }
+
+    .main { max-width: 760px; margin: 0 auto; padding: 48px 20px 80px; }
+    .division { display: none; }
+    .division.active { display: block; }
+
+    .award-section { margin-bottom: 44px; }
+    .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .section-title { font-family: 'Noto Serif JP', serif; font-size: 12px; font-weight: 600; color: #AAA; letter-spacing: 5px; white-space: nowrap; }
+    .section-title.gold { color: #C4962A; }
+    .section-rule { flex: 1; height: 1px; background: #D8D0BC; }
+
+    .award-card { background: #FFFFFF; border-radius: 2px; margin-bottom: 10px; display: grid; grid-template-columns: 52px 1fr; align-items: stretch; box-shadow: 0 1px 4px rgba(0,0,0,0.07); overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; }
+    .award-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.11); transform: translateX(2px); }
+    .award-tier { display: flex; align-items: center; justify-content: center; writing-mode: vertical-rl; font-family: 'Noto Sans JP', sans-serif; font-size: 9px; letter-spacing: 2px; font-weight: 600; }
+    .tier-top .award-tier    { background: #C4962A; color: #FFF; }
+    .tier-second .award-tier { background: #E8E4DC; color: #7A7060; }
+    .tier-select .award-tier { background: #F2EFE8; color: #AAA; }
+
+    .award-body { padding: 16px 20px 16px 20px; }
+    .award-name { font-family: 'Noto Serif JP', serif; font-size: 19px; font-weight: 600; color: #1A1A1A; letter-spacing: 1px; margin-bottom: 4px; }
+    .award-meta { font-size: 11px; color: #BBB; letter-spacing: 1px; margin-bottom: 7px; font-weight: 300; }
+    .award-piece { font-family: 'Noto Serif JP', serif; font-size: 13px; color: #555; }
+
+    .footer { background: #0F0F0F; text-align: center; padding: 28px 20px; font-size: 11px; letter-spacing: 3px; color: rgba(240,237,229,0.25); font-weight: 300; }
+  </style>
+</head>
+<body>
+
+<div class="piano-strip">
+  <div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div>
+  <div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div>
+  <div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div>
+  <div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div>
+  <div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div>
+  <div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div>
+  <div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div>
+  <div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div><div class="pk-b"></div><div class="pk-w"></div>
+</div>
+
+<header class="header">
+  <div class="header-en">Arcadia Piano Concours &mdash; 2020</div>
+  <h1>アルカディアピアノコンクール</h1>
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <span class="ornament-symbol">♩</span>
+    <div class="ornament-line r"></div>
+  </div>
+  <div class="header-sub">コンクール結果発表</div>
+</header>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="switchTab(this,'high')">高校生の部</button>
+  <button class="nav-btn" onclick="switchTab(this,'middle')">中学生の部</button>
+  <button class="nav-btn" onclick="switchTab(this,'elem')">小学生の部</button>
+</nav>
+
+<main class="main">
+
+  <!-- 高校生の部 -->
+  <div id="high" class="division active">
+
+    <div class="award-section">
+      <div class="section-header"><span class="section-title gold">最優秀賞</span><div class="section-rule"></div></div>
+      <div class="award-card tier-top">
+        <div class="award-tier">最優秀賞</div>
+        <div class="award-body">
+          <div class="award-name">藤根 聖文</div>
+          <div class="award-meta">16歳 ／ 岩手県</div>
+          <div class="award-piece">ショパン：ポロネーズ 変イ長調 作品53「英雄」</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="award-section">
+      <div class="section-header"><span class="section-title">優秀賞</span><div class="section-rule"></div></div>
+      <div class="award-card tier-second">
+        <div class="award-tier">優秀賞</div>
+        <div class="award-body">
+          <div class="award-name">山田 ひかり</div>
+          <div class="award-meta">17歳 ／ 宮城県</div>
+          <div class="award-piece">ベートーヴェン：ピアノソナタ第23番 ヘ短調 作品57「熱情」</div>
+        </div>
+      </div>
+      <div class="award-card tier-second">
+        <div class="award-tier">優秀賞</div>
+        <div class="award-body">
+          <div class="award-name">中村 芽依</div>
+          <div class="award-meta">16歳 ／ 青森県</div>
+          <div class="award-piece">ショパン：バラード第1番 ト短調 作品23</div>
+        </div>
+      </div>
+      <div class="award-card tier-second">
+        <div class="award-tier">優秀賞</div>
+        <div class="award-body">
+          <div class="award-name">小林 奈々</div>
+          <div class="award-meta">17歳 ／ 秋田県</div>
+          <div class="award-piece">ショパン：バラード第3番 変イ長調 作品47</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="award-section">
+      <div class="section-header"><span class="section-title">入選</span><div class="section-rule"></div></div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">高橋 美桜</div>
+          <div class="award-meta">16歳 ／ 岩手県</div>
+          <div class="award-piece">ショパン：スケルツォ第2番 変ロ短調 作品31</div>
+        </div>
+      </div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">伊藤 葵</div>
+          <div class="award-meta">17歳 ／ 宮城県</div>
+          <div class="award-piece">シューマン：謝肉祭 作品9</div>
+        </div>
+      </div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">渡辺 咲良</div>
+          <div class="award-meta">16歳 ／ 青森県</div>
+          <div class="award-piece">ドビュッシー：映像 第1集 L.110</div>
+        </div>
+      </div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">松本 凛</div>
+          <div class="award-meta">17歳 ／ 秋田県</div>
+          <div class="award-piece">ブラームス：ラプソディー ロ短調 作品79-1</div>
+        </div>
+      </div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">佐々木 大翔</div>
+          <div class="award-meta">17歳 ／ 岩手県</div>
+          <div class="award-piece">ベートーヴェン：ピアノソナタ第17番 ニ短調 作品31-2「テンペスト」</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 中学生の部 -->
+  <div id="middle" class="division">
+
+    <div class="award-section">
+      <div class="section-header"><span class="section-title gold">最優秀賞</span><div class="section-rule"></div></div>
+      <div class="award-card tier-top">
+        <div class="award-tier">最優秀賞</div>
+        <div class="award-body">
+          <div class="award-name">加藤 由奈</div>
+          <div class="award-meta">14歳 ／ 宮城県</div>
+          <div class="award-piece">ベートーヴェン：ピアノソナタ第14番 嬰ハ短調 作品27-2「月光」（全楽章）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="award-section">
+      <div class="section-header"><span class="section-title">優秀賞</span><div class="section-rule"></div></div>
+      <div class="award-card tier-second">
+        <div class="award-tier">優秀賞</div>
+        <div class="award-body">
+          <div class="award-name">木村 咲</div>
+          <div class="award-meta">13歳 ／ 岩手県</div>
+          <div class="award-piece">ショパン：幻想即興曲 嬰ハ短調 作品66（遺作）</div>
+        </div>
+      </div>
+      <div class="award-card tier-second">
+        <div class="award-tier">優秀賞</div>
+        <div class="award-body">
+          <div class="award-name">岩崎 萌</div>
+          <div class="award-meta">14歳 ／ 秋田県</div>
+          <div class="award-piece">ベートーヴェン：ピアノソナタ第8番 ハ短調 作品13「悲愴」</div>
+        </div>
+      </div>
+      <div class="award-card tier-second">
+        <div class="award-tier">優秀賞</div>
+        <div class="award-body">
+          <div class="award-name">橋本 光</div>
+          <div class="award-meta">14歳 ／ 青森県</div>
+          <div class="award-piece">メンデルスゾーン：ロンドカプリチオーソ 作品14</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="award-section">
+      <div class="section-header"><span class="section-title">入選</span><div class="section-rule"></div></div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">安藤 愛梨</div>
+          <div class="award-meta">13歳 ／ 宮城県</div>
+          <div class="award-piece">バッハ：フランス組曲第5番 ト長調 BWV 816</div>
+        </div>
+      </div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">菊池 陽菜</div>
+          <div class="award-meta">13歳 ／ 岩手県</div>
+          <div class="award-piece">シューベルト：即興曲 変イ長調 作品90-4</div>
+        </div>
+      </div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">千葉 彩夏</div>
+          <div class="award-meta">14歳 ／ 青森県</div>
+          <div class="award-piece">ショパン：ノクターン 変ロ短調 作品9-1</div>
+        </div>
+      </div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">遠藤 樹</div>
+          <div class="award-meta">14歳 ／ 秋田県</div>
+          <div class="award-piece">モーツァルト：ピアノソナタ第11番 イ長調 K.331「トルコ行進曲付き」</div>
+        </div>
+      </div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">石川 春花</div>
+          <div class="award-meta">13歳 ／ 宮城県</div>
+          <div class="award-piece">ショパン：ワルツ 嬰ハ短調 作品64-2</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 小学生の部 -->
+  <div id="elem" class="division">
+
+    <div class="award-section">
+      <div class="section-header"><span class="section-title gold">最優秀賞</span><div class="section-rule"></div></div>
+      <div class="award-card tier-top">
+        <div class="award-tier">最優秀賞</div>
+        <div class="award-body">
+          <div class="award-name">後藤 さくら</div>
+          <div class="award-meta">12歳 ／ 岩手県</div>
+          <div class="award-piece">バッハ：パルティータ第1番 変ロ長調 BWV 825</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="award-section">
+      <div class="section-header"><span class="section-title">優秀賞</span><div class="section-rule"></div></div>
+      <div class="award-card tier-second">
+        <div class="award-tier">優秀賞</div>
+        <div class="award-body">
+          <div class="award-name">大野 愛</div>
+          <div class="award-meta">11歳 ／ 宮城県</div>
+          <div class="award-piece">モーツァルト：幻想曲 ニ短調 K.397</div>
+        </div>
+      </div>
+      <div class="award-card tier-second">
+        <div class="award-tier">優秀賞</div>
+        <div class="award-body">
+          <div class="award-name">藤井 桃花</div>
+          <div class="award-meta">11歳 ／ 青森県</div>
+          <div class="award-piece">ドビュッシー：月の光（ベルガマスク組曲 L.75より）</div>
+        </div>
+      </div>
+      <div class="award-card tier-second">
+        <div class="award-tier">優秀賞</div>
+        <div class="award-body">
+          <div class="award-name">上田 珠里</div>
+          <div class="award-meta">10歳 ／ 秋田県</div>
+          <div class="award-piece">ハイドン：ピアノソナタ ハ長調 Hob. XVI/35</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="award-section">
+      <div class="section-header"><span class="section-title">入選</span><div class="section-rule"></div></div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">関口 実花</div>
+          <div class="award-meta">10歳 ／ 岩手県</div>
+          <div class="award-piece">バッハ：平均律クラヴィア曲集 第1巻 前奏曲とフーガ ハ長調 BWV 846</div>
+        </div>
+      </div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">中島 結花</div>
+          <div class="award-meta">11歳 ／ 宮城県</div>
+          <div class="award-piece">ドビュッシー：「ゴリウォーグのケーク・ウォーク」（子供の領分 L.113より）</div>
+        </div>
+      </div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">長谷川 花音</div>
+          <div class="award-meta">10歳 ／ 青森県</div>
+          <div class="award-piece">スカルラッティ：ソナタ ロ短調 K.87</div>
+        </div>
+      </div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">平野 悠太</div>
+          <div class="award-meta">11歳 ／ 秋田県</div>
+          <div class="award-piece">モーツァルト：ピアノソナタ第13番 変ロ長調 K.333</div>
+        </div>
+      </div>
+      <div class="award-card tier-select">
+        <div class="award-tier">入選</div>
+        <div class="award-body">
+          <div class="award-name">内田 りな</div>
+          <div class="award-meta">10歳 ／ 岩手県</div>
+          <div class="award-piece">グリーグ：「妖精の踊り」（抒情小品集 第1集 作品12-4）</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="footer">
+  2020年 アルカディアピアノコンクール 事務局
+</footer>
+
+<script>
+  function switchTab(btn, id) {
+    document.querySelectorAll('.division').forEach(d => d.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
